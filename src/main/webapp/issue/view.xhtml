@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/WEB-INF/templates/default.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{appIssueManager.id}"
+			converter="javax.faces.Long" />
+		<f:event type="preRenderView" listener="#{appIssueManager.retrieve}" />
+	</f:metadata>
+
+	<ui:define name="content">
+		<p:growl id="messages" showDetail="true" />
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+			<p:commandButton value="Si" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+		<h:panelGrid columns="4">
+
+			<p:outputLabel for="issueId" value="ID:" />
+			<h:outputText id="issueId" value="#{appIssueManager.instance.id}" />
+
+			<p:outputLabel for="issueCreated" value="Creado:" />
+			<h:outputText id="issueCreated"
+				value="#{appIssueManager.instance.created}">
+				<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+			</h:outputText>
+
+			<p:outputLabel for="issueVerified" value="Verificado:" />
+			<h:outputText id="issueVerified"
+				value="#{appIssueManager.instance.verified}">
+				<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+			</h:outputText>
+
+			<p:outputLabel for="issueCreator" value="Creador:" />
+			<h:outputText id="issueCreator"
+				value="#{appIssueManager.instance.creatorUser}" />
+
+			<p:outputLabel for="issueReceiver" value="Recibió:" />
+			<h:outputText id="issueReceiver"
+				value="#{appIssueManager.instance.receiverUser}" />
+
+		</h:panelGrid>
+		<h:panelGrid columns="2">
+			<p:outputLabel for="issuePath" value="Ruta:" />
+			<h:outputText id="issuePath" value="#{appIssueManager.instance.path}" />
+
+		</h:panelGrid>
+		<h:panelGrid columns="1" width="60%">
+			<p:tabView>
+				<p:tab title="Reporte:" id="report">
+					<h:outputText id="issueReport"
+						value="#{appIssueManager.instance.report}" />
+				</p:tab>
+				<p:tab title="Respuesta:" id="response">
+					<h:outputText id="issueResponse"
+						value="#{appIssueManager.instance.response}" />
+				</p:tab>
+			</p:tabView>
+		</h:panelGrid>
+
+		<h:panelGrid styleClass="buttons" columns="3">
+			<p:commandButton value="Volver"
+				action="#{appIssueManager.navigate('search')}" />
+			<p:commandButton value="Editar"
+				action="#{appIssueManager.navigate('update')}" />
+				<p:commandButton value="Eliminar"
+				action="#{appIssueManager.delete()}" />	
+		</h:panelGrid>
+	</ui:define>
+
+</ui:composition>

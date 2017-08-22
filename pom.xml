@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>prueba-webapp</groupId>
+	<artifactId>prueba-webapp</artifactId>
+	<packaging>war</packaging>
+	<version>1.0</version>
+	<name>prueba-webapp</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.fork>true</maven.compiler.fork>
+		<javaee6.web.spec.version>2.0.0.Final</javaee6.web.spec.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.spec</groupId>
+				<artifactId>jboss-javaee-6.0</artifactId>
+				<version>${javaee6.web.spec.version}</version>
+				<type>pom</type>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.spec</groupId>
+				<artifactId>jboss-javaee-web-6.0</artifactId>
+				<version>${javaee6.web.spec.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Soporte para validaciones por anotaciones -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.1.1.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator-cdi</artifactId>
+			<version>5.1.1.Final</version>
+		</dependency>
+		<!-- Soporte para Primefaces 5 -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.primefaces.extensions</groupId>
+			<artifactId>all-themes</artifactId>
+			<version>1.0.8</version>
+		</dependency>
+
+
+
+		<!-- Proporciona soporte para EL con parametros! -->
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>javax.el</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+		<!-- other dependencies -->
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.0.4</version>
+		</dependency>
+
+
+		<!--FIN Dependencias pedidas por maven en el deploy de openshift -->
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>xalan</groupId>
+			<artifactId>xalan</artifactId>
+			<version>2.7.0</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>JBOSS_NEXUS</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>deluan.repo</id>
+			<name>Deluan's Public Repository</name>
+			<url>http://deluan.googlecode.com/svn/releases</url>
+		</repository>
+		<repository>
+			<id>deluan.snapshots</id>
+			<name>Deluan's Public Snapshots Repository</name>
+			<url>http://deluan.googlecode.com/svn/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>prime-repo</id>
+			<name>Prime Repo</name>
+			<url>http://repository.primefaces.org</url>
+		</repository>
+	</repositories>
+</project>

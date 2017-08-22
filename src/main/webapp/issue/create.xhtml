@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/WEB-INF/templates/default.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:event type="preRenderView"
+			listener="#{appIssueManager.prepareCreate()}" />
+	</f:metadata>
+
+	<ui:define name="content">
+		<p:growl id="messages" showDetail="true" />
+
+
+
+		<h:form id="createIssueForm">
+			<p:messages globalOnly="true" styleClass="error" />
+			<h:panelGrid columns="3" width="100%">
+
+				<p:outputLabel for="issueId" value="ID:" />
+				<p:inputText id="issueId" label="Id" size="40"
+					value="#{appIssueManager.instance.id}">
+				</p:inputText>
+				<p:message for="issueId" />
+
+				<p:outputLabel for="issueDate" value="Fecha:" />
+				<p:calendar value="#{appIssueManager.instance.created}"
+					label="Fecha" pattern="yyyy-MM-dd" yearRange="" navigator="true"
+					id="issueDate" />
+				<p:message for="issueDate" />
+
+
+				<p:outputLabel for="issueUser" value="Creador:" />
+				<p:inputText id="issueUser" label="Ruta" size="40"
+					value="#{appIssueManager.instance.creatorUser}">
+				</p:inputText>
+				<p:message for="issueUser" />
+				
+
+				<p:outputLabel for="issuePath" value="URL:" />
+				<p:inputText id="issuePath" label="Ruta" size="40"
+					value="#{appIssueManager.instance.path}">
+				</p:inputText>
+				<p:message for="issuePath" />
+
+				<p:outputLabel for="issueReport" value="Comentario:" />
+				<p:inputTextarea id="issueReport" label="Descripción" cols="40"
+					rows="5" value="#{appIssueManager.instance.report}">
+				</p:inputTextarea>
+				<p:message for="issueReport" />
+
+			</h:panelGrid>
+			<h:panelGrid styleClass="buttons" columns="2">
+				<p:commandButton value="Volver"
+					action="#{appIssueManager.navigate('search')}" />
+				<p:commandButton value="Registrar"
+					action="#{appIssueManager.create()}" />
+			</h:panelGrid>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

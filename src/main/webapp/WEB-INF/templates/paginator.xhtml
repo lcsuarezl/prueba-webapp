@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:panelGroup id="paginator"
+		rendered="#{paginatorBean.count gt paginatorBean.pageSize}">
+		<p:commandButton update="#{updateId}, paginator" value="&lt; Anterior"
+			disabled="#{!(paginatorBean.page gt 0)}">
+			<f:param name="page" value="#{paginatorBean.page - 1}" />
+		</p:commandButton>
+		<h:outputText
+			value="#{paginatorBean.page * paginatorBean.pageSize +1 } al #{(paginatorBean.page +1)*  paginatorBean.pageSize } (de #{paginatorBean.count})" />
+		<p:commandButton value="Siguiente&gt;" update="#{updateId}, paginator"
+			disabled="#{!((paginatorBean.page + 1) * paginatorBean.pageSize lt paginatorBean.count)}">
+			<f:param name="page" value="#{paginatorBean.page + 1}" />
+		</p:commandButton>
+	</h:panelGroup>
+</ui:composition>

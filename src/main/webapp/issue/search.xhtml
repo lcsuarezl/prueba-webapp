@@ -1,0 +1,91 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+
+	<f:metadata>
+		<f:event type="preRenderView" listener="#{appIssueManager.paginate()}" />
+	</f:metadata>
+
+	<ui:define name="content">
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+			<p:commandButton value="Si" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGrid columns="4">
+
+					<p:outputLabel for="transferStart" value="Fecha Inicial:" />
+					<p:calendar value="#{appIssueManager.startDate}"
+						label="Fecha Inicial" pattern="yyyy-MM-dd " yearRange=""
+						navigator="true" id="transferStart" />
+
+					<p:outputLabel for="transferEnd" value="Fecha Final:" />
+					<p:calendar value="#{appIssueManager.endDate}" label="Fecha Final"
+						pattern="yyyy-MM-dd" yearRange="" navigator="true"
+						id="transferEnd" />
+
+					<p:outputLabel for="issueId" value="Id:" />
+					<p:inputText id="issueId" value="#{appIssueManager.instance.id}" />
+
+					<p:outputLabel for="issueKeyWord" value="Palabra:" />
+					<p:inputText id="issueKeyWord"
+						value="#{appIssueManager.instance.path}" />
+
+				</h:panelGrid>
+				<h:panelGrid styleClass="buttons" columns="4">
+					<p:commandButton value="buscar" update="@form">
+						<f:param name="page" value="0" />
+					</p:commandButton>
+					<p:commandButton value="limpiar"
+						action="#{appIssueManager.search()}" update="@form" />
+					<p:commandButton value="Registrar"
+						action="#{appIssueManager.navigate('create')}" />
+				</h:panelGrid>
+
+			</f:validateBean>
+			<p:dataTable id="appIssueManagerPageItems" reflow="true"
+				value="#{appIssueManager.pageItems}" var="_item">
+
+				<p:column headerText="Id" width="20">
+					<h:outputText id="itemId" value="#{_item.id}" />
+				</p:column>
+
+				<p:column headerText="Creado el" width="40">
+					<h:outputText id="itemCreated" value="#{_item.created}">
+						<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Creado el FT" width="40">
+					<h:outputText id="itemCreatedFt" value="#{_item.created.time}">
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Ruta" width="80">
+					<h:outputText id="itemPath" value="#{_item.path}" />
+				</p:column>
+				<p:column headerText="Usuario" width="60">
+					<h:outputText id="itemUser" value="#{_item.creatorUser}" />
+				</p:column>
+				<p:column headerText="#{local.actions}" width="50">
+					<p:commandLink
+						action="#{appIssueManager.toAction('view',_item.id)}"
+						styleClass="none">
+						Detalle
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+			<ui:include src="/WEB-INF/templates/paginator.xhtml">
+				<ui:param name="paginatorBean" value="#{appIssueManager}" />
+				<ui:param name="updateId" value="appIssueManagerPageItems" />
+			</ui:include>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
